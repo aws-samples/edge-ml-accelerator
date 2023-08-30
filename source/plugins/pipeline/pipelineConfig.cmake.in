@@ -1,0 +1,23 @@
+if(NOT @PROJECT_NAME@_@component@_FOUND)
+    include(CMakeFindDependencyMacro)
+    set(_internal_deps
+        utils
+        inference
+        capture
+        output
+     )
+    
+    set(@PROJECT_NAME@_@component@_FOUND TRUE)
+
+    foreach(_comp ${_internal_deps})
+        message(CHECK_START "looking for ${_comp}")
+        include(${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-${_comp}Config.cmake)
+        if(@PROJECT_NAME@_${_comp}_FOUND)
+            message(CHECK_PASS "found")
+        else()
+            message(CHECK_FAIL "not found")
+            set(@PROJECT_NAME@_@component@_FOUND FALSE)
+        endif()
+    endforeach()
+    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-@component@Targets.cmake")
+endif()
