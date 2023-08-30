@@ -1,0 +1,117 @@
+{
+    "capture":
+    [
+        {
+            "cameraName": "Camera1",
+            "cameraType": "GENICAM", 
+            "captureMode": "CAMERAMODE",
+            "hwTriggerDelay": 500000,
+            "exposureTime": 60000,
+            "gainValue": 1,
+            "useGpioTrigger": false,
+            "gpioTriggerDelay": 1000,
+            "useIpcTrigger": false,
+            "useMqttTrigger": false,
+            "ipcTriggerTopic": "/triggering",
+            "mqttTriggerTopic": "/triggering",
+            "swTriggerDelay": 2000,
+            "serialNumber": "0",
+            "controlOrMonitor": 1,
+            "height": 720,
+            "width": 1280,
+            "subpipelines":
+            {
+                "capture": ["output1","output2"],
+                "pipeline1": ["infer1","output1","output2"],
+                "pipeline2": ["infer2","output1","output2","output3"],
+                "pipeline3": ["infer3"],
+                "pipeline4": ["infer4","output4"],
+                "live": ["output1","output2"]
+            }
+        }
+    ],
+
+    "preprocess":
+    {
+        "resizeHeight": 720,
+        "resizeWidth": 1280,
+        "scaleBy": 255,
+        "colorSpace": "RGB"
+    },
+
+    "inference": 
+    [
+        {
+            "inferName": "infer1",
+            "inferType": "LFVE",
+            "model_ids":
+            [
+                {
+                    "model_name": "<LFVEComponentName#1>"
+                }
+            ]
+        },
+        {
+            "inferName": "infer2",
+            "inferType": "EDGEMANAGER",
+            "model_ids":
+            [
+                {
+                    "model_path": "<SageMakerModelLocalLocation>",
+                    "model_name": "<SageMakerComponentName>",
+                    "model_type": "classification | objectedetection | segmentation"
+                }
+            ]
+        },
+        {
+            "inferName": "infer3",
+            "inferType": "ONNX",
+            "model_ids":
+            [
+                {
+                    "model_path": "<local/path/to/model.onnx>",
+                    "model_name": "<OptionalNameOfModel>",
+                    "model_type": "classification | objectedetection | segmentation"
+                }
+            ]
+        },
+        {
+            "inferName": "infer4",
+            "inferType": "TRITON",
+            "modelName": "ensemble",
+            "metadata": "/tmp/" 
+        }
+    ],
+
+    "outputsink":
+    [
+        {
+            "outputSinkName": "output1",
+            "outputSinkType": "local",
+            "localDisk": "/home/xavier/output_images",
+            "imageFormat": "jpg"
+        },
+        {
+            "outputSinkName": "output2",
+            "topicname": "/results",
+            "outputSinkType": "ipctopic"
+        },
+        {
+            "outputSinkName": "output3",
+            "topicname": "/results",
+            "outputSinkType": "mqtttopic"
+        }
+        ,
+        {
+            "s3bucket": "s3://test-bucket",
+            "s3key": "test-key",
+            "s3region": "us-east-1"
+        }
+    ],
+
+    "useGpio": false,
+
+    "clockTime": 10,
+    
+    "timeout": 1000
+}
