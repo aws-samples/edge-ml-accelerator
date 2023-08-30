@@ -116,5 +116,5 @@ By default the EdgeML accelerator connects to a localhost::8001 using Grpc. The 
 
 ## Contributors:
 For any issues, queries, concerns, updates, requests, kindly contact:
-- [Romil Shah (@rpshah)](https://phonetool.amazon.com/users/rpshah)
-- [Fabian Benitez-Quiroz (@fabianbq)](https://phonetool.amazon.com/users/fabianbq)
+- [Romil Shah (@rpshah)](rpshah@amazon.com)
+- [Fabian Benitez-Quiroz (@fabianbq)](fabianbq@amazon.com)
