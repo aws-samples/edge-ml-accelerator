@@ -1,0 +1,24 @@
+[submodule "third_party/grpc"]
+	path = third_party/grpc
+	url = https://github.com/grpc/grpc
+[submodule "third_party/aws-iot-device-sdk-cpp-v2"]
+	path = third_party/aws-iot-device-sdk-cpp-v2
+	url = https://github.com/aws/aws-iot-device-sdk-cpp-v2.git
+[submodule "third_party/aws-sdk-cpp"]
+	path = third_party/aws-sdk-cpp
+	url = https://github.com/aws/aws-sdk-cpp
+[submodule "third_party/rc_genicam_api"]
+	path = third_party/rc_genicam_api
+	url = https://github.com/roboception/rc_genicam_api.git
+[submodule "third_party/opencv"]
+	path = third_party/opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "third_party/onnxruntime"]
+	path = third_party/onnxruntime
+	url = https://github.com/Microsoft/onnxruntime
+[submodule "third_party/triton_client"]
+	path = third_party/triton_client
+	url = https://github.com/triton-inference-server/client
+[submodule "third_party/nlohmann_json"]
+	path = third_party/nlohmann_json
+	url = https://github.com/nlohmann/json
