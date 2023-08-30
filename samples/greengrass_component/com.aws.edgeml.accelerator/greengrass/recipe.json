@@ -1,0 +1,67 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "{COMPONENT_NAME}",
+    "ComponentVersion": "{COMPONENT_VERSION}",
+    "ComponentDescription": "EdgeMLAccelerator Inference Component",
+    "ComponentPublisher": "AWS EdgeMLAccelerator",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "EDGE_ML_CONFIG": "/path/to/edge-ml-config.json",
+        "accessControl": {
+          "aws.greengrass.ipc.mqttproxy": {
+            "com.aws.edgeml.accelerator:mqttproxy:1": {
+              "operations": [
+                "*"
+              ],
+              "resources": [
+                "*"
+              ]
+            }
+          },
+          "aws.greengrass.ipc.pubsub": {
+            "com.aws.edgeml.accelerator:pubsub:1": {
+              "operations": [
+                "*"
+              ],
+              "resources": [
+                "*"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "all"
+        },
+        "Artifacts": [
+          {
+            "URI": "s3://BUCKET_NAME/COMPONENT_NAME/COMPONENT_VERSION/greengrass.zip",
+            "Unarchive": "ZIP"
+          }
+        ],
+        "Lifecycle": {
+          "Install": {
+            "Script": "cp {artifacts:decompressedPath}/greengrass/edgeml-accelerator-package.zip . && unzip -qo edgeml-accelerator-package.zip && rm edgeml-accelerator-package.zip",
+            "RequiresPrivilege": "true"
+          },
+          "Run": {
+            "Setenv": {
+              "LD_LIBRARY_PATH": "{work:path}/package/lib:{work:path}/package/lib/edge-ml-accelerator",
+              "PATH": "{work:path}/package/bin",
+              "EDGE_ML_CONFIG": "{configuration:/EDGE_ML_CONFIG}"
+            },
+            "Script": "./package/bin/pipeline_app 25",
+            "RequiresPrivilege": "true",
+            "Timeout": 900
+          },
+          "Shutdown": {
+            "Script": "echo \"EDGE-ML-ACCELERATOR SHUTTING DOWN\" && rm -rf package/",
+            "RequiresPrivilege": "true"
+          }
+        }
+      }
+    ]
+  }
