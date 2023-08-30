@@ -1,0 +1,80 @@
+version: 0.2
+env:
+  shell: bash
+#env:
+#variables:
+# key: \"value\"
+# key: \"value\"
+#parameter-store:
+# key: \"value\"
+# key: \"value\"
+#secrets-manager:
+# key: secret-id:json-key:version-stage:version-id
+# key: secret-id:json-key:version-stage:version-id
+#exported-variables:
+# - variable
+# - variable
+#git-credential-helper: yes
+#batch:
+#fast-fail: true
+#build-list:
+#build-matrix:
+#build-graph:
+phases:
+  install:
+    commands:
+      # Lower gcc and g++ version since we are on Ubuntu 18.04
+      # - apt-get install -y gcc-7 g++-7
+      # - update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1
+      # - update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 1
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    #runtime-versions:
+    # name: version
+    # name: version
+    #commands:
+    # - command
+    # - command
+  #pre_build:
+  #commands:
+  # - command
+  # - command
+  build:
+    commands:
+      - /bin/bash buildscripts/localbuild.sh
+      - pwd
+      - ls -al
+      - ls -al ..
+      # - zip -r /tmp/build.zip ../*
+      # - command
+      # - command
+  #post_build:
+  #commands:
+  # - command
+  # - command
+#reports:
+#report-name-or-arn:
+#files:
+# - location
+# - location
+#base-directory: location
+#discard-paths: yes
+#file-format: JunitXml | CucumberJson
+artifacts:
+  files:
+    - package/**/*
+    # - location
+  name: edge-ml-accelerator-$(date +%Y-%m-%d-%H-%M-%S).zip
+  #discard-paths: yes
+  #base-directory: location
+cache:
+  paths:
+    - grpc_build/**/*
+    - aws_sdk_build/**/*
+    - aws_iot_device_sdk_cpp_v2_build/**/*
+    - opencv_build/**/*
+    - onnxruntime_build/**/*
+    - pylon_package/**/*
+    - triton_client_build/**/*
+    - nlohmann_json_build/**/*
+    # - build/**/*
