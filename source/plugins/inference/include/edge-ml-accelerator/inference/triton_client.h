@@ -21,7 +21,7 @@
 #include <dirent.h>
 #include <edge-ml-accelerator/inference/base_inference.h>
 
-#include <grpc_client.h>
+// #include <grpc_client.h>
 
 namespace tc = triton::client;
 
